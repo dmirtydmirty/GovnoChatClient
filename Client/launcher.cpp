@@ -8,6 +8,6 @@ Launcher::Launcher(QObject *parent)
 
 void Launcher::start(){
     client.connectToHost("localhost", 15001);
-    connect(&client, &TCPClient::packetReceived, &gui, &MainWindow::pushMessage);
+    connect(&client, &TCPClient::packetReceived, &gui, &MainWindow::addMessageItem);
     gui.show();
 }

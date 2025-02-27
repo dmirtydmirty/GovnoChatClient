@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QStandardItemModel>
+#include <QKeyEvent>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -19,11 +20,19 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    void keyPressEvent(QKeyEvent* event);
+
 private:
     Ui::MainWindow *ui;
 
+signals:
+    void newMessage(QString msg);
+
+private slots:
+    void onSend();
+
 public slots:
-    void pushMessage(QString msg);
+    void addMessageItem(QString msg);
 
 };
 #endif // MAINWINDOW_H

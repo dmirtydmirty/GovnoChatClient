@@ -9,14 +9,19 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    imessage.cpp \
     launcher.cpp \
     main.cpp \
     mainwindow.cpp \
+    serverstatusmessage.cpp \
     tcpclient.cpp
 
 HEADERS += \
+    imessage.h \
     launcher.h \
     mainwindow.h \
+    protocol.h \
+    serverstatusmessage.h \
     tcpclient.h
 
 FORMS += \
