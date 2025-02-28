@@ -1,23 +1,28 @@
 #ifndef SERVERSTATUSMESSAGE_H
 #define SERVERSTATUSMESSAGE_H
 
-#include <QObject>
+#include "imessage.h"
 #include <QString>
 
-#include "imessage.h"
-
-class ServerStatusMessage : public virtual QObject, public virtual IMessage
-{
-    Q_PROPERTY(QString statusMessage READ statusMessage WRITE setStatusMessage NOTIFY statusMessageChanged FINAL)
+class ServerStatusMessage : public IMessage {
+    Q_OBJECT
 public:
-    explicit ServerStatusMessage(QObject *parent = nullptr);
+    explicit ServerStatusMessage(QObject *parent = nullptr) : IMessage(parent) {}
+    ~ServerStatusMessage() override = default;
 
-    void setStatusMessage(QString statusMessage);
-    QString statusMessage() const;
+    QString statusInfo() const { return m_statusInfo; }
 
-signals:
+
+    void setStatusInfo(const QString &statusInfo) {
+        m_statusInfo = statusInfo;
+    }
+
+    QVariant get() const override {return statusInfo();}
+
 private:
-    QString mStatusMessage;
+    Q_PROPERTY(QString StatusInfo READ statusInfo WRITE setStatusInfo)
+
+    QString m_statusInfo;
 };
 
 #endif // SERVERSTATUSMESSAGE_H

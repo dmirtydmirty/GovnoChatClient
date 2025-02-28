@@ -13,7 +13,6 @@ SOURCES += \
     launcher.cpp \
     main.cpp \
     mainwindow.cpp \
-    serverstatusmessage.cpp \
     tcpclient.cpp
 
 HEADERS += \
@@ -22,7 +21,9 @@ HEADERS += \
     mainwindow.h \
     protocol.h \
     serverstatusmessage.h \
-    tcpclient.h
+    tcpclient.h \
+    useridnotification.h \
+    usermessage.h
 
 FORMS += \
     mainwindow.ui
