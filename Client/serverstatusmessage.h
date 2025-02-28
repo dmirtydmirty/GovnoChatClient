@@ -7,7 +7,7 @@
 class ServerStatusMessage : public IMessage {
     Q_OBJECT
 public:
-    explicit ServerStatusMessage(QObject *parent = nullptr) : IMessage(parent) {}
+    explicit ServerStatusMessage() : IMessage() {}
     ~ServerStatusMessage() override = default;
 
     QString statusInfo() const { return m_statusInfo; }

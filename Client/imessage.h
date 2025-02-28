@@ -12,7 +12,7 @@ class IMessage : public QObject
     Q_OBJECT
 public:
 
-    explicit IMessage(QObject *parent = nullptr) : QObject(parent) {}
+    explicit IMessage() : QObject() {}
     virtual ~IMessage() = default;
 
     virtual QVariant get() const = 0;

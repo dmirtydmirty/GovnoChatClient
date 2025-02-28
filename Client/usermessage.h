@@ -7,7 +7,7 @@
 class UserMessage : public IMessage {
     Q_OBJECT
 public:
-    explicit UserMessage(QObject *parent = nullptr) : IMessage(parent) {}
+    explicit UserMessage() : IMessage() {}
     ~UserMessage() override = default;
 
     QString content() const { return m_content; }

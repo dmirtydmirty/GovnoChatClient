@@ -13,12 +13,14 @@ SOURCES += \
     launcher.cpp \
     main.cpp \
     mainwindow.cpp \
+    packet.cpp \
     tcpclient.cpp
 
 HEADERS += \
     imessage.h \
     launcher.h \
     mainwindow.h \
+    packet.h \
     protocol.h \
     serverstatusmessage.h \
     tcpclient.h \

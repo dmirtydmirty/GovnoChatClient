@@ -7,7 +7,7 @@
 class UserIDNotification : public IMessage {
     Q_OBJECT
 public:
-    explicit UserIDNotification(QObject *parent = nullptr) : IMessage(parent) {}
+    explicit UserIDNotification() : IMessage() {}
     ~UserIDNotification() override = default;
 
     quint32 id() const { return m_id; }
