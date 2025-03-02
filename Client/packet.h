@@ -27,6 +27,7 @@ public:
 
     MessageType get_type() const {return m_type;}
     uint32_t get_sender() const {return m_sender;}
+    QSharedPointer<IMessage> get_message() const {return m_message;}
     QString pack() const;
 
 private:

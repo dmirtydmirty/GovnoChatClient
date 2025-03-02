@@ -9,26 +9,29 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    chatwidget.cpp \
+    client.cpp \
     imessage.cpp \
-    launcher.cpp \
+    loadingwidget.cpp \
     main.cpp \
-    mainwindow.cpp \
     packet.cpp \
-    tcpclient.cpp
+    tcpclient.cpp \
+    mainwindow.cpp
 
 HEADERS += \
+    chatwidget.h \
+    client.h \
     imessage.h \
-    launcher.h \
-    mainwindow.h \
+    loadingwidget.h \
     packet.h \
     protocol.h \
     serverstatusmessage.h \
     tcpclient.h \
     useridnotification.h \
-    usermessage.h
+    usermessage.h \
+    mainwindow.h
 
-FORMS += \
-    mainwindow.ui
+FORMS += mainwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

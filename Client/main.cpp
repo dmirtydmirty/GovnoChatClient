@@ -1,12 +1,12 @@
 #include <QApplication>
 
-#include "launcher.h"
+#include "client.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    Launcher launcher;
-    launcher.start();
+    Client client;
+    client.start();
 
     return a.exec();
 }

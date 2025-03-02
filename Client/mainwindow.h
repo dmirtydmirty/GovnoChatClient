@@ -4,6 +4,10 @@
 #include <QMainWindow>
 #include <QStandardItemModel>
 #include <QKeyEvent>
+#include <QStackedWidget>
+
+#include "chatwidget.h"
+#include "loadingwidget.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -14,7 +18,7 @@ QT_END_NAMESPACE
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
-    QStandardItemModel * model;
+    QStandardItemModel * m_model;
 
 public:
     MainWindow(QWidget *parent = nullptr);
@@ -23,7 +27,9 @@ public:
     void keyPressEvent(QKeyEvent* event);
 
 private:
-    Ui::MainWindow *ui;
+    ChatWidget* m_chatWidget;
+    LoadingWidget* m_loadingWidget;
+    QStackedWidget* m_stackedWidget;
 
 signals:
     void newMessage(QString msg);
@@ -33,6 +39,8 @@ private slots:
 
 public slots:
     void addMessageItem(QString msg);
+    void startChat(quint32 id);
+
 
 };
 #endif // MAINWINDOW_H
