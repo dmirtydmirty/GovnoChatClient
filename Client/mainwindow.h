@@ -39,7 +39,8 @@ private slots:
 
 public slots:
     void addMessageItem(QString msg);
-    void startChat(quint32 id);
+    void setChatInterface(quint32 id);
+    void setLoadingScreen();
 
 
 };

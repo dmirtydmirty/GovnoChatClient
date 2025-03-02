@@ -14,6 +14,7 @@ class ChatWidget : public QWidget
     Q_OBJECT
 public:
     explicit ChatWidget(QWidget *parent = nullptr);
+    void setId(quint32 id) {m_id = id;}
 
 public:
     QListView   *m_listView;
@@ -23,6 +24,7 @@ private:
     QVBoxLayout *m_verticalLayout;
     QHBoxLayout *m_horizontalLayout;
     QGroupBox   *m_groupeBox;
+    quint32     m_id;
 
 
 

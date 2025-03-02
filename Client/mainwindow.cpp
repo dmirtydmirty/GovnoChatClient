@@ -30,12 +30,13 @@ void MainWindow::addMessageItem(QString msg){
     m_model->setItem(m_model->rowCount(), 0, new QStandardItem(msg));
 }
 
-void MainWindow::setChatInterface()
+void MainWindow::setChatInterface(quint32 id)
 {
+    m_chatWidget->setId(id);
     m_stackedWidget->setCurrentIndex(0);
 }
 
-void MainWindow::setLoadingScreen(quint32)
+void MainWindow::setLoadingScreen()
 {
     m_stackedWidget->setCurrentIndex(1);
 }
