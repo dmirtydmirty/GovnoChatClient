@@ -5,7 +5,7 @@ Client::Client(QObject *parent)
 {}
 
 void Client::start(){
-    tcpClient.connectToHost("localhost", 15001);
+    tcpClient.connectToHost("127.0.0.1", 15001);
     connect(&tcpClient, &TCPClient::packetReceived, this, &Client::handlePacket);
     connect(&gui, &MainWindow::newMessageFromGUI, this, &Client::sendPacket);
     gui.show();
@@ -15,11 +15,20 @@ void Client::handlePacket(QString rawPacket)
 {
     QSharedPointer<Packet> packet(new Packet(rawPacket));
 
-    if (packet->get_type() == MessageType::USER_MESSAGE)
-        gui.onMessageFromServer(packet);
 
-    if (packet->get_type() == MessageType::USER_ID_NOTIFICATION)
+    switch (packet->get_type()) {
+    case MessageType::USER_MESSAGE:
+        gui.onMessageFromServer(packet);
+        break;
+    case MessageType::SERVER_STATUS_MESSAGE:
+        gui.onMessageFromServer(packet);
+        break;
+    case MessageType::USER_ID_NOTIFICATION:
         gui.startChating(packet->get_message()->get().toInt());
+        break;
+    default:
+        break;
+    }
 
 }
 

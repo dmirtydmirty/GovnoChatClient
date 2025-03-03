@@ -8,7 +8,7 @@ ChatWidget::ChatWidget(quint32 id)
     m_lineEdit = new QLineEdit();
     m_pushButton = new QPushButton("Send");
     m_listView = new QListView();
-    m_listView->setMinimumSize(QSize(500, 600));
+
 
     m_verticalLayout->addWidget(m_listView);
 
