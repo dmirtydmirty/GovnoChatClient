@@ -2,6 +2,9 @@
 #include <QJsonObject>
 
 #include "packet.h"
+#include "serverstatusmessage.h"
+#include "useridnotification.h"
+#include "usermessage.h"
 
 Packet::Packet(const QString &raw_packet)
 {

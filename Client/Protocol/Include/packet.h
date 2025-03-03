@@ -7,9 +7,6 @@
 #include <QtTypes>
 
 #include "imessage.h"
-#include "serverstatusmessage.h"
-#include "useridnotification.h"
-#include "usermessage.h"
 
 enum MessageType : quint8 {
     USER_MESSAGE=0,

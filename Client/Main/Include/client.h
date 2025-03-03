@@ -19,9 +19,8 @@ public:
     void start();
 public slots:
     void handlePacket(QString rawPacket);
+    void sendPacket(QSharedPointer<Packet>);
 
-signals:
-    void newUserMessage(QSharedPointer<Packet> userMessagePacket);
 };
 
 #endif // CLIENT_H

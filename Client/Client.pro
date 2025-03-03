@@ -9,29 +9,35 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    chatwidget.cpp \
-    client.cpp \
-    imessage.cpp \
-    loadingwidget.cpp \
-    main.cpp \
-    packet.cpp \
-    tcpclient.cpp \
-    mainwindow.cpp
+    GUI/Source/chatwidget.cpp \
+    GUI/Source/loadingwidget.cpp \
+    GUI/Source/mainwindow.cpp \
+    Main/Source/client.cpp \
+    Main/Source/main.cpp \
+    Protocol/Source/imessage.cpp \
+    Protocol/Source/packet.cpp \
+    Tcp/Source/tcpclient.cpp
+
+INCLUDEPATH += \
+    GUI/Include/        \
+    Main/Include/       \
+    Protocol/Include/   \
+    Tcp/Include/
 
 HEADERS += \
-    chatwidget.h \
-    client.h \
-    imessage.h \
-    loadingwidget.h \
-    packet.h \
-    protocol.h \
-    serverstatusmessage.h \
-    tcpclient.h \
-    useridnotification.h \
-    usermessage.h \
-    mainwindow.h
+    GUI/Include/chatwidget.h \
+    GUI/Include/loadingwidget.h \
+    GUI/Include/mainwindow.h \
+    Main/Include/client.h \
+    Protocol/Include/imessage.h \
+    Protocol/Include/packet.h \
+    Protocol/Include/protocol.h \
+    Protocol/Include/serverstatusmessage.h \
+    Protocol/Include/useridnotification.h \
+    Protocol/Include/usermessage.h \
+    Tcp/Include/tcpclient.h
 
-FORMS += mainwindow.ui
+
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

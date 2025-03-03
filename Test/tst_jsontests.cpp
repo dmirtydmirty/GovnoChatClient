@@ -4,10 +4,10 @@
 #include <QSharedPointer>
 
 // add necessary includes here
-#include "../Client/serverstatusmessage.h"
-#include "../Client/useridnotification.h"
-#include "../Client/usermessage.h"
-#include "../Client/packet.h"
+#include "serverstatusmessage.h"
+#include "useridnotification.h"
+#include "usermessage.h"
+#include "packet.h"
 
 class JsonTests : public QObject
 {

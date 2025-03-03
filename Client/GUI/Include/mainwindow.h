@@ -2,12 +2,11 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QStandardItemModel>
-#include <QKeyEvent>
 #include <QStackedWidget>
 
 #include "chatwidget.h"
 #include "loadingwidget.h"
+#include "packet.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -18,13 +17,13 @@ QT_END_NAMESPACE
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
-    QStandardItemModel * m_model;
 
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    void startChating(quint32 id);
+    void onMessageFromServer(QSharedPointer<Packet> packet);
 
-    void keyPressEvent(QKeyEvent* event);
 
 private:
     ChatWidget* m_chatWidget;
@@ -32,15 +31,10 @@ private:
     QStackedWidget* m_stackedWidget;
 
 signals:
-    void newMessage(QString msg);
+    void newMessageFromGUI(QSharedPointer<Packet> packet);
 
 private slots:
-    void onSend();
-
-public slots:
-    void addMessageItem(QString msg);
-    void setChatInterface(quint32 id);
-    void setLoadingScreen();
+    void onMessageFromGUI(QString msg);
 
 
 };

@@ -7,11 +7,16 @@ CONFIG -= app_bundle
 TEMPLATE = app
 
 SOURCES += tst_jsontests.cpp \
-            ../Client/imessage.cpp \
-            ../Client/packet.cpp
+    ../Client/Protocol/Source/imessage.cpp \
+    ../Client/Protocol/Source/packet.cpp
 
-HEADERS += ../Client/serverstatusmessage.h \
-            ../Client/imessage.h \
-            ../Client/useridnotification.h \
-            ../Client/usermessage.h \
-            ../Client/packet.h
+
+INCLUDEPATH += \
+    ../Client/Protocol/Include/
+
+HEADERS += \
+    ../Client/Protocol/Include/imessage.h \
+    ../Client/Protocol/Include/packet.h \
+    ../Client/Protocol/Include/serverstatusmessage.h \
+    ../Client/Protocol/Include/useridnotification.h \
+    ../Client/Protocol/Include/usermessage.h
