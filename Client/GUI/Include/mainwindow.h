@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QStackedWidget>
+#include <QMenuBar>
 
 #include "chatwidget.h"
 #include "loadingwidget.h"
@@ -29,6 +30,7 @@ private:
     ChatWidget* m_chatWidget;
     LoadingWidget* m_loadingWidget;
     QStackedWidget* m_stackedWidget;
+    QMenuBar* m_menuBar;
 
 signals:
     void newMessageFromGUI(QSharedPointer<Packet> packet);
