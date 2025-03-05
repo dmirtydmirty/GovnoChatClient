@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QSharedPointer>
 #include <QString>
+#include <QPair>
 
 #include "tcpclient.h"
 #include "mainwindow.h"
@@ -14,6 +15,9 @@ class Client : public QObject
     Q_OBJECT
     TCPClient tcpClient;
     MainWindow gui;
+    QPair<QString, quint16> server;
+
+    void readServerConfig();
 public:
     explicit Client(QObject *parent = nullptr);
     void start();

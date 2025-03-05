@@ -1,12 +1,29 @@
 #include "client.h"
 #include <QFile>
+#include <QJsonDocument>
+#include <QJsonObject>
 
 Client::Client(QObject *parent)
     : QObject{parent}
 {}
 
+void Client::readServerConfig()
+{
+    QString dafault_path = "srv.json";
+    QFile cfg(dafault_path);
+    if (cfg.open(QIODevice::ReadOnly)){
+        QTextStream in(&cfg);
+        QJsonDocument doc = QJsonDocument::fromJson(in.readAll().toUtf8());
+        QJsonObject obj = doc.object();
+        if (obj["host"].isString() && obj["port"].isDouble())
+            server = QPair(obj["host"].toString(), obj["port"].toInt());
+    }
+
+}
+
 void Client::start(){
-    tcpClient.connectToHost("127.0.0.1", 15001);
+    readServerConfig();
+    tcpClient.connectToHost(server.first, server.second);
     connect(&tcpClient, &TCPClient::packetReceived, this, &Client::handlePacket);
     connect(&gui, &MainWindow::newMessageFromGUI, this, &Client::sendPacket);
     gui.show();

@@ -51,8 +51,7 @@ qt_add_executable(${PROJECT_NAME} WIN32 MACOSX_BUNDLE ${SOURCES} ${INCLUDES})
 target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Widgets Qt6::Core Qt6::Network)
 target_include_directories(${PROJECT_NAME} PRIVATE ${INCLUDE_PATH})
 
-# Копируем srv.json в каталог с исполняемым файлом
-# add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-#     COMMAND ${CMAKE_COMMAND} -E copy_if_different "${CMAKE_SOURCE_DIR}/srv.json" "$<TARGET_FILE_DIR:${PROJECT_NAME}>"
-#     COMMENT "Копируем srv.json в каталог с исполняемым файлом"
-# )
+
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different "${CMAKE_SOURCE_DIR}/Client/Config/srv.json" "$<TARGET_FILE_DIR:${PROJECT_NAME}>"
+)
