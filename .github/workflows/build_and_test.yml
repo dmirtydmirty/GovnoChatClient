@@ -26,10 +26,11 @@ jobs:
           arch: ${{ env.QT_ARCH }}
           cache: true
           dir: ${{ runner.temp }}
-          setup-pyqt: false
 
       - name: Configure CMake
-        run: cmake -B ${{ runner.temp }}\${{ env.BUILD_DIR_NAME }} -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+        run: |
+          set PATH=%PATH%;..\Qt\${{ env.QT_VERSION }}\${{ env.QT_ARCH }}\bin
+          cmake -B ${{ runner.temp }}\${{ env.BUILD_DIR_NAME }} -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_PREFIX_PATH="C:/Qt/${{ env.QT_VERSION }}/mingw_64"
 
       - name: Build
         run: cmake --build ${{ runner.temp }}\${{ env.BUILD_DIR_NAME }} --config ${{env.BUILD_TYPE}} --target all
