@@ -17,19 +17,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Install Ninja (choco)
-        uses: actions/checkout@v3
-        run: choco install ninja
-        shell: powershell
-
-      - name: Add Ninja to PATH
-        shell: pwsh
-        run: |
-          $ninjaPath = Get-Command ninja | Select-Object -ExpandProperty Definition | Split-Path
-          Write-Host "Adding Ninja to PATH: $ninjaPath"
-          $env:PATH += ";$ninjaPath"
-          Write-Host "PATH: $($env:PATH)"
-
       - name: Install Qt
         id: install-qt
         uses: jurplel/install-qt-action@v4
@@ -50,11 +37,11 @@ jobs:
 
       - name: Configure CMake
         run: |
-          cmake -G "Ninja" -B ${{ runner.temp }}\${{ env.BUILD_DIR_NAME }} -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_PREFIX_PATH="$env:QtDir"
+          cmake -G "MinGW Makefiles" -B ${{ runner.temp }}\${{ env.BUILD_DIR_NAME }} -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_PREFIX_PATH="$env:QtDir"
 
       - name: Build
         run: |
-          cd build
-          ninja
+          cd ${{ runner.temp }}\${{ env.BUILD_DIR_NAME }}
+          mingw32-make -j6 
 
 
