@@ -9,9 +9,7 @@ env:
   SOURCE_DIR: ${{ github.workspace }}\Client
   ARTIFACT_WITHOUT_ZIP_ENDING: GovnoChatClient
   BUILD_DIR_NAME: buildGovnoChatClient
-  TEST_SOURCE_DIR: ${{ github.workspace }}\Test
-  TEST_ARTIFACT_WITHOUT_ZIP_ENDING: TestingGovnoChat
-  TEST_BUILD_DIR_NAME: buildTestingGovnoChat
+  
 
 jobs:
   build-and-test:
