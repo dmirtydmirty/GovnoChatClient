@@ -27,13 +27,13 @@ jobs:
           arch: ${{ env.QT_ARCH }}
           cache: true
 
-      - name: Set up environment variables
-        shell: pwsh
-        run: |
-          $qtDir = "${{ steps.install-qt.outputs.install-dir }}/${{ steps.install-qt.outputs.qt-version }}/${{ env.QT_VERSION }}/bin"
-          Write-Host "Adding Qt bin directory to PATH: $qtDir"
-          $env:PATH += ";$qtDir"
-          Write-Host "PATH: $($env:PATH)"
+      # - name: Set up environment variables
+      #   shell: pwsh
+      #   run: |
+      #     $qtDir = "${{ steps.install-qt.outputs.install-dir }}/${{ steps.install-qt.outputs.qt-version }}/${{ env.QT_VERSION }}/bin"
+      #     Write-Host "Adding Qt bin directory to PATH: $qtDir"
+      #     $env:PATH += ";$qtDir"
+      #     Write-Host "PATH: $($env:PATH)"
 
       - name: Configure CMake
         run: |
