@@ -27,17 +27,16 @@ jobs:
           arch: ${{ env.QT_ARCH }}
           cache: true
 
-      # - name: Set up environment variables
-      #   shell: pwsh
-      #   run: |
-      #     $qtDir = "${{ steps.install-qt.outputs.install-dir }}/${{ steps.install-qt.outputs.qt-version }}/${{ env.QT_VERSION }}/bin"
-      #     Write-Host "Adding Qt bin directory to PATH: $qtDir"
-      #     $env:PATH += ";$qtDir"
-      #     Write-Host "PATH: $($env:PATH)"
+      - name: Set up environment variables
+        shell: pwsh
+        run: |
+          $qtDir = "${{ steps.install-qt.outputs.install-dir }}/${{ steps.install-qt.outputs.qt-version }}/${{ env.QT_VERSION }}/bin"
+          Write-Host "Adding Qt bin directory to PATH: $qtDir"
+          $env:PATH += ";$qtDir"
+          Write-Host "PATH: $($env:PATH)"
 
       - name: Configure CMake
         run: |
-          set PATH=%PATH%;..\Qt\${{ env.QT_VERSION }}\${{ env.QT_ARCH }}\bin
           cmake -B ${{ runner.temp }}\${{ env.BUILD_DIR_NAME }} -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_PREFIX_PATH="C:/Qt/${{ env.QT_VERSION }}/mingw_64"
 
       - name: Build
