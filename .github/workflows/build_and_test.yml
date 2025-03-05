@@ -1,9 +1,17 @@
 name: Build-and-test
 on: push
 jobs:
-  build:
+  build-and-test:
     runs-on: windows-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-        
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v4
+        with:
+            version: 6.8.2
+            host: "version"
+            target: desktop
+            arch: "win64_mingw"
+            cache: true
