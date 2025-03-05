@@ -1,5 +1,18 @@
 name: Build-and-test
 on: push
+
+env:
+  SOURCE_DIR: ${{ github.workspace }}
+  QT_VERSION: 6.8.2
+  QT_ARCH: "win64_mingw"
+  BUILD_TYPE: Debug
+  SOURCE_DIR: ${{ github.workspace }}\Client
+  ARTIFACT_WITHOUT_ZIP_ENDING: GovnoChatClient
+  BUILD_DIR_NAME: buildGovnoChatClient
+  TEST_SOURCE_DIR: ${{ github.workspace }}\Test
+  TEST_ARTIFACT_WITHOUT_ZIP_ENDING: TestingGovnoChat
+  TEST_BUILD_DIR_NAME: buildTestingGovnoChat
+
 jobs:
   build-and-test:
     runs-on: windows-latest
@@ -10,8 +23,16 @@ jobs:
       - name: Install Qt
         uses: jurplel/install-qt-action@v4
         with:
-            version: 6.8.2
-            host: "windows"
-            target: desktop
-            arch: "win64_mingw"
-            cache: true
+          version: ${{ env.QT_VERSION }}
+          host: "windows"
+          target: desktop
+          arch: ${{ env.QT_ARCH }}
+          cache: true
+          dir: ${{ runner.temp }}
+          setup-pyqt: false
+
+      - name: Configure CMake
+        run: cmake -B ${{ runner.temp }}\${{ env.BUILD_DIR_NAME }} -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+
+      - name: Build
+        run: cmake --build ${{ runner.temp }}\${{ env.BUILD_DIR_NAME }} --config ${{env.BUILD_TYPE}} --target all
