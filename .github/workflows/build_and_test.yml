@@ -6,7 +6,6 @@ env:
   QT_VERSION: 6.8.2
   QT_ARCH: "win64_mingw"
   BUILD_TYPE: Debug
-  SOURCE_DIR: ${{ github.workspace }}\Client
   ARTIFACT_WITHOUT_ZIP_ENDING: GovnoChatClient
   BUILD_DIR_NAME: buildGovnoChatClient
   
