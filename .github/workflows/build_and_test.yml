@@ -11,7 +11,7 @@ jobs:
         uses: jurplel/install-qt-action@v4
         with:
             version: 6.8.2
-            host: "version"
+            host: "windows"
             target: desktop
             arch: "win64_mingw"
             cache: true
