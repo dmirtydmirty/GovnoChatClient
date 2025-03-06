@@ -30,10 +30,13 @@ jobs:
       - name: Set up environment variables
         shell: pwsh
         run: |
-          $qtDir = "${{ steps.install-qt.outputs.install-dir }}/${{ steps.install-qt.outputs.qt-version }}/${{ env.QT_VERSION }}/bin"
+          $qtDir = "${{ steps.install-qt.outputs.install-dir }}/${{ steps.install-qt.outputs.qt-version }}/bin"
           Write-Host "Adding Qt bin directory to PATH: $qtDir"
           $env:PATH += ";$qtDir"
           Write-Host "PATH: $($env:PATH)"
+          dir ${{ steps.install-qt.outputs.install-dir }}/
+          dir ${{ steps.install-qt.outputs.install-dir }}/${{ steps.install-qt.outputs.qt-version }}/
+          dir ${{ steps.install-qt.outputs.install-dir }}/${{ steps.install-qt.outputs.qt-version }}/Tools
 
       - name: Configure CMake
         run: |
