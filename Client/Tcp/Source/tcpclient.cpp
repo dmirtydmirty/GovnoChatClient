@@ -25,6 +25,6 @@ void TCPClient::onReadyRead() {
     }
 }
 
-void TCPClient::sendPacket(QString){
-
+void TCPClient::sendPacket(QString packet){
+    socket->write(packet.toUtf8());
 }
