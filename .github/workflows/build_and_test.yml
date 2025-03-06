@@ -25,18 +25,19 @@ jobs:
           host: "windows"
           target: desktop
           arch: ${{ env.QT_ARCH }}
+          dir: ${{ runner.temp }}
           cache: true
 
       - name: Set up environment variables
         shell: pwsh
         run: |
-          $qtDir = "${{ steps.install-qt.outputs.install-dir }}/${{ steps.install-qt.outputs.qt-version }}/bin"
+          $qtDir = "${{ runner.temp }}/Qt/${{ steps.install-qt.outputs.qt-version }}/bin"
           Write-Host "Adding Qt bin directory to PATH: $qtDir"
           $env:PATH += ";$qtDir"
           Write-Host "PATH: $($env:PATH)"
-          dir ${{ steps.install-qt.outputs.install-dir }}/
-          dir ${{ steps.install-qt.outputs.install-dir }}/${{ steps.install-qt.outputs.qt-version }}/
-          dir ${{ steps.install-qt.outputs.install-dir }}/${{ steps.install-qt.outputs.qt-version }}/Tools
+          dir ${{ runner.temp }}
+          dir ${{ runner.temp }}/Qt/
+          dir ${{ runner.temp }}/Qt/${{ steps.install-qt.outputs.qt-version }}
 
       - name: Configure CMake
         run: |
