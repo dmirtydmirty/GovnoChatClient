@@ -37,8 +37,6 @@ jobs:
           Write-Host "Adding Qt bin directory to PATH: $qtDir"
           $env:PATH += ";$qtDir"
           Write-Host "PATH: $($env:PATH)"
-          dir ${{ runner.temp }}/Qt/Tools
-          echo $PATH
 
       - name: Configure CMake
         run: |
