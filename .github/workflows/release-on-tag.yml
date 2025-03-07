@@ -79,12 +79,12 @@ jobs:
             name: artifact
             path: ${{ github.workspace }}
 
+      - name: Set up 7zip
+        uses: milliewalky/setup-7-zip@v1
 
-      - name: Pack scripts into archive
+      - name: Pack into archive
         run: |
-            mkdir GovnoChatClient-${{ github.ref_name }}\
-            xcopy Client\ GovnoChatServer-${{ github.ref_name }}\
-            zip -r GovnoChatClient-${{ github.ref_name }}.zip GovnoChatClient-${{ github.ref_name }}
+            7z a GovnoChatClient-${{ github.ref_name }}.7z Client
 
       - name: Create Release
         id: create_release
@@ -104,6 +104,6 @@ jobs:
             GITHUB_TOKEN: ${{ secrets.TOKEN }}
         with:
             upload_url: ${{ steps.create_release.outputs.upload_url }}
-            asset_path: GovnoChatClient-${{ github.ref_name }}.zip
-            asset_name: GovnoChatClient-${{ github.ref_name }}.zip
-            asset_content_type: application/zip
+            asset_path: GovnoChatClient-${{ github.ref_name }}.7z
+            asset_name: GovnoChatClient-${{ github.ref_name }}.7z
+            asset_content_type: application/x-7z-compressed
