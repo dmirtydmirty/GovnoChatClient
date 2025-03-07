@@ -60,7 +60,7 @@ jobs:
         run: ${{ runner.temp }}\Qt\${{ env.QT_VERSION }}\mingw_64\bin\windeployqt.exe ${{ runner.temp }}\art\Client\Client.exe
 
       - name: Browse_files
-        run: ls -a ${{ runner.temp }}\art\Client\
+        run: dir ${{ runner.temp }}\art\Client\
         
       - name: Upload artifact
         uses: actions/upload-artifact@v4
