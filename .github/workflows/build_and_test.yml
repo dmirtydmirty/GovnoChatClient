@@ -21,12 +21,14 @@ jobs:
         id: install-qt
         uses: jurplel/install-qt-action@v4
         with:
+          aqtversion: '==3.1.*'
           version: ${{ env.QT_VERSION }}
           host: "windows"
           target: desktop
           arch: ${{ env.QT_ARCH }}
           dir: ${{ runner.temp }}
-          tools: 'qt.tools.cmake,qt.tools.ninja'
+          tools: 'tools_cmake tools_ninja'
+          archives: 'MinGW'
           cache: true
 
       - name: Set up environment variables
