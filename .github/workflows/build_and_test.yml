@@ -42,7 +42,7 @@ jobs:
 
       - name: Configure CMake
         run: |
-          cmake -B ${{ runner.temp }}\${{ env.BUILD_DIR_NAME }} -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_PREFIX_PATH="$env:QtDir"
+          cmake -G "Ninja" -B ${{ runner.temp }}\${{ env.BUILD_DIR_NAME }} -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_PREFIX_PATH="$env:QtDir"
 
       - name: Build
         run: cmake --build ${{ runner.temp }}\${{ env.BUILD_DIR_NAME }} --config ${{env.BUILD_TYPE}} --target all 
