@@ -27,8 +27,7 @@ jobs:
           target: desktop
           arch: ${{ env.QT_ARCH }}
           dir: ${{ runner.temp }}
-          tools: 'tools_cmake tools_ninja tools_mingw1310'
-          archives: 'MinGW'
+          # tools: 'tools_cmake tools_ninja tools_mingw1310'
           cache: true
 
       - name: Set up environment variables
@@ -40,13 +39,13 @@ jobs:
           Write-Host "PATH: $($env:PATH)"
           dir ${{ runner.temp }}/Qt/${{ env.QT_VERSION }}/mingw_64
 
-      - name: Configure CMake
-        run: |
-          cmake -G "MinGW Makefiles" -B ${{ runner.temp }}\${{ env.BUILD_DIR_NAME }} -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_PREFIX_PATH="$env:QtDir"
+      # - name: Configure CMake
+      #   run: |
+      #     cmake -G "MinGW Makefiles" -B ${{ runner.temp }}\${{ env.BUILD_DIR_NAME }} -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_PREFIX_PATH="$env:QtDir"
 
-      - name: Build
-        run: |
-          cd ${{ runner.temp }}\${{ env.BUILD_DIR_NAME }}
-          mingw32-make -j6 
+      # - name: Build
+      #   run: |
+      #     cd ${{ runner.temp }}\${{ env.BUILD_DIR_NAME }}
+      #     mingw32-make -j6 
 
 
