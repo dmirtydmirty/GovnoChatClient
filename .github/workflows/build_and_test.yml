@@ -40,13 +40,11 @@ jobs:
           dir ${{ runner.temp }}/Qt/Tools
           echo $PATH
 
-      # - name: Configure CMake
-      #   run: |
-      #     cmake -G "MinGW Makefiles" -B ${{ runner.temp }}\${{ env.BUILD_DIR_NAME }} -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_PREFIX_PATH="$env:QtDir"
+      - name: Configure CMake
+        run: |
+          cmake -B ${{ runner.temp }}\${{ env.BUILD_DIR_NAME }} -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_PREFIX_PATH="$env:QtDir"
 
-      # - name: Build
-      #   run: |
-      #     cd ${{ runner.temp }}\${{ env.BUILD_DIR_NAME }}
-      #     mingw32-make -j6 
+      - name: Build
+        run: cmake --build ${{ runner.temp }}\${{ env.BUILD_DIR_NAME }} --config ${{env.BUILD_TYPE}} --target all 
 
 
