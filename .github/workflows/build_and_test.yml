@@ -48,6 +48,6 @@ jobs:
         run: cmake --build ${{ runner.temp }}\${{ env.BUILD_DIR_NAME }} --config ${{env.BUILD_TYPE}} --target all 
 
       - name: Test
-        run:  ctest --progress --verbose --test-dir ${{ runner.temp }}\${{ env.BUILD_DIR_NAME }}
+        run:  ctest --progress --verbose --test-dir ${{ runner.temp }}\${{ env.BUILD_DIR_NAME }}\Test
 
 
