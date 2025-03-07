@@ -47,4 +47,7 @@ jobs:
       - name: Build
         run: cmake --build ${{ runner.temp }}\${{ env.BUILD_DIR_NAME }} --config ${{env.BUILD_TYPE}} --target all 
 
+      - name: Test
+        run:  ${{ runner.temp }}\${{ env.BUILD_DIR_NAME }}\Test\JsonTests.exe
+
 
