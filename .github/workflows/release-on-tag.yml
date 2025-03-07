@@ -57,7 +57,7 @@ jobs:
             cp ${{ runner.temp }}\${{ env.BUILD_DIR_NAME }}\Client\srv.json  ${{ runner.temp }}\art\Client
 
       - name: Deploy
-        run: ${{ runner.temp }}\Qt\${{ env.QT_VERSION }}\bin/windeployqt.exe ${{ runner.temp }}\art\Client\Client.exe
+        run: ${{ runner.temp }}\Qt\${{ env.QT_VERSION }}\mingw_64\bin\windeployqt.exe ${{ runner.temp }}\art\Client\Client.exe
 
       - name: Browse_files
         run: ls -a ${{ runner.temp }}\art\Client\
