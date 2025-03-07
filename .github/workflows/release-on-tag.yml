@@ -1,6 +1,6 @@
 name: Release on tag
 on:
-  create:
+  push:
     tags:
       - v*
 
@@ -91,7 +91,7 @@ jobs:
         uses: actions/create-release@v1
         env:
             GITHUB_TOKEN: ${{ secrets.TOKEN }}
-            with:
+        with:
             tag_name: ${{ github.ref }}
             release_name: Release ${{ github.ref_name }}
             body: This is a release build.
