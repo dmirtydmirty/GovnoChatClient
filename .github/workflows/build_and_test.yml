@@ -33,7 +33,7 @@ jobs:
       - name: Set up environment variables
         shell: pwsh
         run: |
-          ls ${{ runner.temp }}\Qt\${{ env.QT_VERSION }}\bin 
+          ls ${{ runner.temp }}\Qt\${{ env.QT_VERSION }}\mingw_64\bin 
           $qtDir = "${{ runner.temp }}/Qt/${{ env.QT_VERSION }}/bin"
           Write-Host "Adding Qt bin directory to PATH: $qtDir"
           $env:PATH += ";$qtDir"
