@@ -1,0 +1,110 @@
+name: Release on tag
+on:
+  create:
+    tags:
+      - v*
+
+env:
+  SOURCE_DIR: ${{ github.workspace }}
+  QT_VERSION: 6.8.2
+  QT_ARCH: "win64_mingw"
+  BUILD_TYPE: Release
+  ARTIFACT_WITHOUT_ZIP_ENDING: GovnoChatClient
+  BUILD_DIR_NAME: buildGovnoChatClient
+
+jobs:
+  prepare-files:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install Qt
+        id: install-qt
+        uses: jurplel/install-qt-action@v4
+        with:
+          aqtversion: '==3.1.*'
+          version: ${{ env.QT_VERSION }}
+          host: "windows"
+          target: desktop
+          arch: ${{ env.QT_ARCH }}
+          dir: ${{ runner.temp }}
+          tools: 'tools_cmake tools_ninja tools_mingw1310'
+          cache: true
+
+      - name: Set up environment variables
+        shell: pwsh
+        run: |
+          $qtDir = "${{ runner.temp }}/Qt/${{ env.QT_VERSION }}/bin"
+          Write-Host "Adding Qt bin directory to PATH: $qtDir"
+          $env:PATH += ";$qtDir"
+          Write-Host "PATH: $($env:PATH)"
+
+      - name: Configure CMake
+        run: |
+          cmake -G "Ninja" -B ${{ runner.temp }}\${{ env.BUILD_DIR_NAME }} -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_PREFIX_PATH="$env:QtDir"
+
+      - name: Build
+        run: cmake --build ${{ runner.temp }}\${{ env.BUILD_DIR_NAME }} --config ${{env.BUILD_TYPE}} --target all 
+
+      - name: Test
+        run:  ctest --progress --verbose --test-dir ${{ runner.temp }}\${{ env.BUILD_DIR_NAME }}\Test
+
+      - name: Create artifact
+        run: |
+            ls
+            mkdir -p ${{ runner.temp }}\art\Client
+            cp ${{ runner.temp }}\${{ env.BUILD_DIR_NAME }}\Client\Client.exe  ${{ runner.temp }}\art\Client
+            cp ${{ runner.temp }}\${{ env.BUILD_DIR_NAME }}\Client\srv.json  ${{ runner.temp }}\art\Client
+
+      - name: Deploy
+        run: ${{ runner.temp }}/Qt/${{ env.QT_VERSION }}/bin/windeployqt.exe ${{ runner.temp }}\art\Client\Client.exe
+
+      - name: Browse_files
+        run: ls -a ${{ runner.temp }}\art\Client\
+        
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+            name: artifact
+            path: ${{ runner.temp }}\art
+
+
+  create-release:
+    needs: prepare-files
+    runs-on: windows-latest
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+            name: artifact
+            path: ${{ github.workspace }}
+
+
+      - name: Pack scripts into archive
+        run: |
+            mkdir GovnoChatClient-${{ github.ref_name }}\
+            xcopy Client\ GovnoChatServer-${{ github.ref_name }}\
+            zip -r GovnoChatClient-${{ github.ref_name }}.zip GovnoChatClient-${{ github.ref_name }}
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+            GITHUB_TOKEN: ${{ secrets.TOKEN }}
+            with:
+            tag_name: ${{ github.ref }}
+            release_name: Release ${{ github.ref_name }}
+            body: This is a release build.
+            draft: false
+            prerelease: false
+    
+      - name: Upload artifact to release
+        uses: actions/upload-release-asset@v1
+        env:
+            GITHUB_TOKEN: ${{ secrets.TOKEN }}
+        with:
+            upload_url: ${{ steps.create_release.outputs.upload_url }}
+            asset_path: GovnoChatClient-${{ github.ref_name }}.zip
+            asset_name: GovnoChatClient-${{ github.ref_name }}.zip
+            asset_content_type: application/zip
