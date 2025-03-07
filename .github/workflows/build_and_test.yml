@@ -27,9 +27,9 @@ jobs:
           target: desktop
           arch: ${{ env.QT_ARCH }}
           dir: ${{ runner.temp }}
-          tools: 'tools_cmake tools_ninja'
+          tools: 'tools_cmake tools_ninja tools_mingw1310''
           archives: 'MinGW'
-          # cache: true
+          cache: true
 
       - name: Set up environment variables
         shell: pwsh
