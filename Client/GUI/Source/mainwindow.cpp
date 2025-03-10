@@ -7,10 +7,6 @@ MainWindow::MainWindow(QWidget *parent)
     setMinimumSize(QSize(500, 600));
     m_stackedWidget = new QStackedWidget();
     m_loadingWidget = new LoadingWidget();
-    m_menuBar = new QMenuBar;
-    setMenuWidget(m_menuBar);
-    m_menuBar->addMenu("Chat");
-    m_menuBar->addMenu("Settings");
     m_stackedWidget->addWidget(m_loadingWidget);
 
     setCentralWidget(m_stackedWidget);
