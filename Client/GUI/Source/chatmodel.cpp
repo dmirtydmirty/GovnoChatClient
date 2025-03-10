@@ -1,10 +1,14 @@
 #include "chatmodel.h"
 
-
+#include <QSize>
 ChatModel::ChatModel(QObject *parent)
     : QAbstractListModel(parent)
 {
-
+    m_messages << ChatMessage("1", 1);
+    m_messages << ChatMessage("2", 2);
+    m_messages << ChatMessage("3", 3);
+    m_messages << ChatMessage("4", 4);
+    m_messages << ChatMessage("5", 5);
 }
 
 int ChatModel::rowCount(const QModelIndex &parent) const
@@ -14,27 +18,36 @@ int ChatModel::rowCount(const QModelIndex &parent) const
 
 QVariant ChatModel::data(const QModelIndex &index, int role) const
 {
-    qDebug() << QString("row %1, col%2, role %3")
-    .arg(index.row()).arg(index.column()).arg(role);
-    return QString("frog");
-    // int idx = index.row();
-    // switch (role) {
-    // case Qt::DisplayRole:
-    //     if (m_messages[idx].senderId() != 0)
-    //         return QString("User" + QString::number(m_messages[idx].senderId()) + " -> " + m_messages[idx].message());
-    //     else
-    //         return QString(m_messages[idx].message());
-    // case ChatRoles::MessageRole:
-    //     return m_messages[idx].message();
-    // case ChatRoles::SenderIdRole:
-    //     return m_messages[idx].senderId();
-    // default:
-    //     return QString("Frog object");
-    //     break;
-    // }
+
+    qDebug() << QString("row %1, col%2, role %3").arg(index.row()).arg(index.column()).arg(role);
+    if( role != Qt::DisplayRole || role != Qt::EditRole )
+        return QVariant();
+    if( index.column() == 0 && index.row() < m_messages.count() )
+        return" m_messages.at( index.row() ).senderId()";
+    else
+        return QVariant();
 }
 
-void ChatModel::addMessage(const ChatMessage &message)
+bool ChatModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-    m_messages.append(message);
+    qDebug() << QString("row %1, col%2, role %3").arg(index.row()).arg(index.column()).arg(role);
+    if( role != Qt::EditRole ||
+        index.column() != 0 ||
+        index.row() >= m_messages.count() +1 )
+        return false;
+    else if (index.row() == m_messages.count() +1 ) {
+        m_messages.append(qvariant_cast<ChatMessage>(value));
+        return true;
+    }
+    m_messages[ index.row() ] = qvariant_cast<ChatMessage>(value);
+    // emit dataChanged( index, index );
+    return true;
 }
+
+
+// Qt::ItemFlags ChatModel::flags(const QModelIndex &index) const
+// {
+//     if(!index.isValid())
+//         return Qt::ItemIsEnabled;
+//     return Qt::ItemIsSelectable | Qt::ItemIsEditable | Qt::ItemIsEnabled;
+// }

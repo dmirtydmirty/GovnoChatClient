@@ -16,12 +16,13 @@
 class ChatWidget : public QWidget
 {
     Q_OBJECT
-    ChatModel * m_model;
 public:
     explicit ChatWidget(quint32 id);
     quint32 id() const {return m_id;}
 
 private:
+    ChatModel * m_model;
+
     QListView   *m_listView;
     QLineEdit   *m_lineEdit;
     QPushButton *m_pushButton;

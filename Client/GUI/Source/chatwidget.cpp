@@ -27,7 +27,11 @@ ChatWidget::ChatWidget(quint32 id)
 
 void ChatWidget::addNewMessage(ChatMessage msg){
     // m_model->setItem(m_model->rowCount(), 0, new QStandardItem(msg));
-    m_model->addMessage(msg);
+    auto idx = QModelIndex();/*
+    idx.siblingAtRow(m_model->rowCount()+1);
+    QVariant m;
+    m.setValue(msg);
+    m_model->setData(idx, m, Qt::EditRole);*/
 }
 
 

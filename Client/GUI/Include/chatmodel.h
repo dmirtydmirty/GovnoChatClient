@@ -9,7 +9,6 @@
 
 
 class ChatModel : public QAbstractListModel {
-    Q_OBJECT
 public:
     enum ChatRoles {
         MessageRole = Qt::UserRole + 1,
@@ -28,7 +27,8 @@ public:
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
-    void addMessage(const ChatMessage& message);
+    bool setData( const QModelIndex &index, const QVariant &value, int role ) override;
+    // Qt::ItemFlags flags( const QModelIndex &index ) const override;
 private:
     QList<ChatMessage> m_messages;
 };
