@@ -48,7 +48,7 @@ void MainWindow::onMessageFromServer(QSharedPointer<Packet> packet)
     else
         msg = packet->get_message()->get().toString();
     if (m_chatWidget != nullptr)
-        m_chatWidget->addNewMessage(msg);
+        m_chatWidget->addNewMessage(ChatMessage(packet->get_message()->get().toString(), packet->get_sender()));
 }
 
 

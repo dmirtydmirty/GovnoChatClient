@@ -11,10 +11,12 @@
 #include <QStandardItemModel>
 #include <QKeyEvent>
 
+#include "chatmodel.h"
+
 class ChatWidget : public QWidget
 {
     Q_OBJECT
-    QStandardItemModel * m_model;
+    ChatModel * m_model;
 public:
     explicit ChatWidget(quint32 id);
     quint32 id() const {return m_id;}
@@ -31,7 +33,7 @@ private:
 
 public:
     void keyPressEvent(QKeyEvent* event);
-    void addNewMessage(QString msg);
+    void addNewMessage(ChatMessage msg);
 
 private slots:
     void onSend();

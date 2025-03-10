@@ -17,16 +17,17 @@ ChatWidget::ChatWidget(quint32 id)
     m_verticalLayout->addLayout(m_horizontalLayout);
 
 
-    m_model = new QStandardItemModel();
-    m_model->setColumnCount(0);
+    m_model = new ChatModel();
+    // m_model->setColumnCount(0);
     m_listView->setModel(m_model);
 
     connect(m_pushButton, &QPushButton::clicked, this, &ChatWidget::onSend);
-    addNewMessage("Wellcome to chat, your id is " + QString::number(m_id));
+    // addNewMessage("Wellcome to chat, your id is " + QString::number(m_id));
 }
 
-void ChatWidget::addNewMessage(QString msg){
-    m_model->setItem(m_model->rowCount(), 0, new QStandardItem(msg));
+void ChatWidget::addNewMessage(ChatMessage msg){
+    // m_model->setItem(m_model->rowCount(), 0, new QStandardItem(msg));
+    m_model->addMessage(msg);
 }
 
 
@@ -35,7 +36,7 @@ void ChatWidget::onSend(){
     if (msg.isEmpty())
         return;
     m_lineEdit->clear();
-    addNewMessage("You -> " + msg);
+    addNewMessage(ChatMessage(msg, m_id));
     emit newMessage(msg);
 
 }
