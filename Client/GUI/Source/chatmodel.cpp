@@ -32,7 +32,6 @@ QVariant ChatModel::data(const QModelIndex &index, int role) const
 
 bool ChatModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-    qDebug() << "ChatModel::setData" << QString("row %1, col%2, role %3").arg(index.row()).arg(index.column()).arg(role);
     if( role != Qt::EditRole ||
         index.column() != 0 ||
         index.row() >= m_messages.count())
