@@ -11,7 +11,9 @@
 #include <QStandardItemModel>
 #include <QKeyEvent>
 
+
 #include "chatmodel.h"
+#include "chatdelegate.h"
 
 class ChatWidget : public QWidget
 {
@@ -24,6 +26,7 @@ private:
     ChatModel * m_model;
 
     QListView   *m_listView;
+    ChatDelegate * m_chatDelegate;
     QLineEdit   *m_lineEdit;
     QPushButton *m_pushButton;
 
@@ -41,8 +44,6 @@ private slots:
 
 signals:
     void newMessage(QString msg);
-
-
 
 };
 

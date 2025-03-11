@@ -8,6 +8,8 @@ ChatWidget::ChatWidget(quint32 id)
     m_lineEdit = new QLineEdit();
     m_pushButton = new QPushButton("Send");
     m_listView = new QListView();
+    m_chatDelegate = new ChatDelegate();
+    m_listView->setItemDelegate(m_chatDelegate);
 
 
     m_verticalLayout->addWidget(m_listView);
@@ -18,7 +20,6 @@ ChatWidget::ChatWidget(quint32 id)
 
 
     m_model = new ChatModel();
-    // m_model->setColumnCount(0);
     m_listView->setModel(m_model);
 
     connect(m_pushButton, &QPushButton::clicked, this, &ChatWidget::onSend);
@@ -26,12 +27,7 @@ ChatWidget::ChatWidget(quint32 id)
 }
 
 void ChatWidget::addNewMessage(ChatMessage msg){
-    // m_model->setItem(m_model->rowCount(), 0, new QStandardItem(msg));
-    auto idx = QModelIndex();/*
-    idx.siblingAtRow(m_model->rowCount()+1);
-    QVariant m;
-    m.setValue(msg);
-    m_model->setData(idx, m, Qt::EditRole);*/
+    m_model->addMessage(msg);
 }
 
 

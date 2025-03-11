@@ -18,6 +18,7 @@ set(SOURCES
     GUI/Source/mainwindow.cpp
     GUI/Source/settingswidget.cpp
     GUI/Source/chatmodel.cpp
+    GUI/Source/chatdelegate.cpp
     Main/Source/client.cpp
     Main/Source/main.cpp
     Protocol/Source/imessage.cpp
@@ -32,6 +33,7 @@ set(INCLUDES
     GUI/Include/settingswidget.h
     GUI/Include/chatmessage.h
     GUI/Include/chatmodel.h
+    GUI/Include/chatdelegate.h
     Main/Include/client.h
     Protocol/Include/imessage.h
     Protocol/Include/packet.h
