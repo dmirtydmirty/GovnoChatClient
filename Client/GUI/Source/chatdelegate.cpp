@@ -16,7 +16,7 @@ void ChatDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
     QStyleOptionViewItem opt = option;
     initStyleOption(&opt, index);
 
-    painter->save(); // Save painter state
+    painter->save();
     if (opt.state & QStyle::State_Selected) {
         painter->fillRect(opt.rect, opt.palette.highlight());
     } else {
@@ -29,7 +29,7 @@ void ChatDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
     int messageX = senderIdX + 100;
     int messageY = senderIdY;
 
-    QString senderIdText = QString("ID: %1").arg(senderId);
+    QString senderIdText = QString("user%1:").arg(senderId);
     painter->setPen(opt.palette.color(QPalette::Text));
     painter->drawText(senderIdX, senderIdY, senderIdText);
 
