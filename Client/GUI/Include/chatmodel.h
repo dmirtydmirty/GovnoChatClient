@@ -13,6 +13,7 @@ public:
     enum ChatRoles {
         MessageRole = Qt::UserRole + 1,
         SenderIdRole,
+        IsFromSelfRole,
     };
 
     explicit ChatModel(QObject *parent = nullptr);

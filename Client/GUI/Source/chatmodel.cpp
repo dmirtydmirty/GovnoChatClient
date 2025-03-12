@@ -22,8 +22,11 @@ QVariant ChatModel::data(const QModelIndex &index, int role) const
     else if (role == SenderIdRole) {
         return m_messages[index.row()].senderId();
     }
+    else if (role == IsFromSelfRole) {
+        return m_messages[index.row()].isFromSelf();
+    }
     else if (role == Qt::DisplayRole || role == Qt::EditRole) {
-        return QVariant("User" + QString::number(m_messages[index.row()].senderId()) + " -> " + m_messages[index.row()].message());
+        return m_messages[index.row()].message();
     }
     else {
         return QVariant();

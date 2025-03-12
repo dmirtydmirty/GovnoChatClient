@@ -36,7 +36,7 @@ void ChatWidget::onSend(){
     if (msg.isEmpty())
         return;
     m_lineEdit->clear();
-    addNewMessage(ChatMessage(msg, m_id));
+    addNewMessage(ChatMessage(msg, m_id, true));
     emit newMessage(msg);
 
 }
