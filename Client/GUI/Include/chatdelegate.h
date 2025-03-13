@@ -5,6 +5,14 @@
 #include <QStyledItemDelegate>
 
 class ChatDelegate : public QStyledItemDelegate {
+
+    quint16 m_messageFieldMaxWidth = 400;
+    quint16 m_messageFieldMinWidth = 100;
+    quint16 m_senderFieldWidth = 100;
+
+    quint16 m_padding = 5;
+    quint8 m_textPadding = 10;
+    quint8 m_cornerRadius= 3;
 public:
     explicit ChatDelegate(QObject *parent = nullptr);
 

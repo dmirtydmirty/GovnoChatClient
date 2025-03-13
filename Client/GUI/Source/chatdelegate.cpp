@@ -15,24 +15,59 @@ void ChatDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 
     quint32 senderID = index.data(ChatModel::SenderIdRole).toInt();
     QString message = index.data(ChatModel::MessageRole).toString();
+    bool isFromSelf = index.data(ChatModel::IsFromSelfRole).toBool();
 
+    QFontMetrics fm(opt.font);
+    QRect bounding_rect = fm.boundingRect(QRect(0, 0, m_messageFieldMaxWidth - 2 * m_textPadding, 0), Qt::AlignJustify | Qt::TextWordWrap, message);
 
-    if (index.data(ChatModel::IsFromSelfRole).toBool()){
+    if (isFromSelf){
 
-        QRect messageRect = QRect(opt.rect.x() + 100 + 10, opt.rect.y() + 5, opt.rect.width() - 100 - 10 , opt.rect.height() - 5);
+        QRect messageRect(opt.rect.x() + opt.rect.width() - bounding_rect.width() - m_padding - 2 * m_textPadding,
+                        opt.rect.y() + m_padding,
+                        bounding_rect.width() + 2 * m_textPadding,
+                        opt.rect.height() -  m_padding );
 
-        painter->fillRect(messageRect, Qt::lightGray);
-        painter->drawText(messageRect, Qt::AlignJustify | Qt::TextWordWrap, message);
+        QRect textRect(messageRect.x() + m_textPadding,
+                        messageRect.y() + m_textPadding,
+                        messageRect.width() - 2 * m_textPadding,
+                        messageRect.height() - 2 * m_textPadding);
+
+        painter->setBrush(QBrush(Qt::lightGray));
+        painter->setPen(Qt::NoPen);
+        painter->drawRoundedRect(messageRect, m_cornerRadius, m_cornerRadius);
+        painter->setPen(Qt::black);
+        painter->drawText(textRect, Qt::AlignJustify | Qt::TextWordWrap | Qt::AlignVCenter, message);
     }
     else {
-        QRect senderIDRect = QRect(opt.rect.x() + 5, opt.rect.y() +  5 , 100, opt.rect.height() -5 );
-        QRect messageRect = QRect(opt.rect.x() + 100 + 10, opt.rect.y() + 5, opt.rect.width() - 100 - 100 - 10 , opt.rect.height() - 5);
+        QRect senderIDRect = QRect(opt.rect.x() + m_padding ,
+                                   opt.rect.y() +  m_padding,
+                                   m_senderFieldWidth,
+                                   opt.rect.height() -  m_padding );
+        QRect messageRect = QRect(opt.rect.x() + m_senderFieldWidth + 2 * m_padding,
+                                  opt.rect.y() + m_padding,
+                                  bounding_rect.width()  + 2 * m_textPadding,
+                                  opt.rect.height() - m_padding);
 
-        painter->fillRect(senderIDRect, Qt::lightGray);
-        painter->drawText(senderIDRect, Qt::AlignCenter, "User" + QString::number(senderID));
+        QRect textRect(messageRect.x() + m_textPadding,
+                       messageRect.y() + m_textPadding,
+                       messageRect.width() - 2 * m_textPadding,
+                       messageRect.height() - 2 * m_textPadding);
 
-        painter->fillRect(messageRect, Qt::lightGray);
-        painter->drawText(messageRect, Qt::AlignJustify | Qt::TextWordWrap, message);
+
+        painter->setBrush(QBrush(Qt::lightGray));
+        painter->setPen(Qt::NoPen);
+
+        painter->drawRoundedRect(senderIDRect, m_cornerRadius, m_cornerRadius);
+        painter->drawRoundedRect(messageRect, m_cornerRadius, m_cornerRadius);
+
+        painter->setPen(Qt::black);
+
+        if (senderID != 0)
+            painter->drawText(senderIDRect, Qt::AlignCenter, "User" + QString::number(senderID));
+        else
+            painter->drawText(senderIDRect, Qt::AlignCenter, "Server");
+
+        painter->drawText(textRect, Qt::AlignJustify | Qt::TextWordWrap | Qt::AlignVCenter, message);
     }
 
 
@@ -43,8 +78,9 @@ QSize ChatDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelInd
     initStyleOption(&opt, index);
     QString message = index.data(ChatModel::MessageRole).toString();
     QFontMetrics fm(opt.font);
-    QRect bounding_rect = fm.boundingRect(QRect(0, 0, opt.rect.width(), 0), Qt::AlignJustify | Qt::TextWordWrap, message);
-    return QSize(bounding_rect.width(), bounding_rect.height() + 20);
+    QRect bounding_rect = fm.boundingRect(QRect(0, 0, m_messageFieldMaxWidth - 2 * m_textPadding, 0), Qt::AlignJustify | Qt::TextWordWrap, message);
+    return QSize(m_messageFieldMaxWidth + 3 * m_padding + m_senderFieldWidth + 2 * m_textPadding,
+                 bounding_rect.height() + 2 * m_padding + 2 * m_textPadding);
 }
 
 

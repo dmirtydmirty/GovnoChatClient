@@ -25,7 +25,7 @@ QVariant ChatModel::data(const QModelIndex &index, int role) const
     else if (role == IsFromSelfRole) {
         return m_messages[index.row()].isFromSelf();
     }
-    else if (role == Qt::DisplayRole || role == Qt::EditRole) {
+    else if (role == Qt::DisplayRole) {
         return m_messages[index.row()].message();
     }
     else {
@@ -35,12 +35,14 @@ QVariant ChatModel::data(const QModelIndex &index, int role) const
 
 bool ChatModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
+
     if( role != Qt::EditRole ||
         index.column() != 0 ||
         index.row() >= m_messages.count())
         return false;
     m_messages[ index.row() ] = qvariant_cast<ChatMessage>(value);
     emit dataChanged( index, index, {Qt::EditRole} );
+    qDebug() << "set " << m_messages[ index.row() ].message() << " to ";
     return true;
 }
 

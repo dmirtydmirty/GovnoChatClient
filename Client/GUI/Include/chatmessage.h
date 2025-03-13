@@ -4,6 +4,7 @@
 #include <QString>
 #include <QtTypes>
 #include <QMetaType>
+#include <QDebug>
 
 class ChatMessage{
     QString m_message;
@@ -14,13 +15,14 @@ public:
         m_message(message), m_senderId(senderId), m_fromSelf(fromSelf)
     {}
     ChatMessage(const ChatMessage& other):
-        m_message(other.m_message), m_senderId(other.m_senderId)
+        m_message(other.m_message), m_senderId(other.m_senderId), m_fromSelf(other.m_fromSelf)
     {}
 
     QString message() const {return m_message;}
     quint32 senderId() const {return m_senderId;}
     bool isFromSelf() const {return m_fromSelf;}
-    bool operator=(const ChatMessage& other){ return other.m_message == m_message && other.m_senderId == m_senderId;}
+    bool operator==(const ChatMessage& other) const { return other.m_message == m_message && other.m_senderId == m_senderId;}
+
 };
 
 

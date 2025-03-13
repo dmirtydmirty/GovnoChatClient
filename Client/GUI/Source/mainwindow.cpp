@@ -4,7 +4,7 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
-    setMinimumSize(QSize(500, 600));
+    setMinimumSize(QSize(600, 600));
     m_stackedWidget = new QStackedWidget();
     m_loadingWidget = new LoadingWidget();
     m_stackedWidget->addWidget(m_loadingWidget);
@@ -44,7 +44,7 @@ void MainWindow::onMessageFromServer(QSharedPointer<Packet> packet)
     else
         msg = packet->get_message()->get().toString();
     if (m_chatWidget != nullptr)
-        m_chatWidget->addNewMessage(ChatMessage(packet->get_message()->get().toString(), packet->get_sender()));
+        m_chatWidget->addNewMessage(ChatMessage(packet->get_message()->get().toString(), packet->get_sender(), false));
 }
 
 
