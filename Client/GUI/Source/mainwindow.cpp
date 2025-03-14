@@ -1,5 +1,8 @@
+#include <QMenuBar>
+
 #include "mainwindow.h"
 #include "usermessage.h"
+#include "settingsdialog.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -10,6 +13,19 @@ MainWindow::MainWindow(QWidget *parent)
     m_stackedWidget->addWidget(m_loadingWidget);
 
     setCentralWidget(m_stackedWidget);
+
+    QMenuBar *menuBar = QMainWindow::menuBar();
+    if (!menuBar) {
+        menuBar = new QMenuBar(this);
+        setMenuBar(menuBar);
+    }
+
+    optionsMenu = menuBar->addMenu("Options");
+
+    settingsAction = new QAction("Settings", this);
+    optionsMenu->addAction(settingsAction);
+
+    connect(settingsAction, &QAction::triggered, this, &MainWindow::openSettingsDialog);
 
     m_stackedWidget->setCurrentIndex(1);
 }
@@ -25,6 +41,13 @@ void MainWindow::onMessageFromGUI(QString msg)
     userMsg->setContent(msg);
     QSharedPointer<Packet> packet(new Packet(userMsg, MessageType::USER_MESSAGE, m_chatWidget->id()));
     emit newMessageFromGUI(packet);
+}
+
+void MainWindow::openSettingsDialog()
+{
+    SettingsDialog *settingsDialog = new SettingsDialog(this);
+
+    settingsDialog->exec();
 }
 
 void MainWindow::startChating(quint32 id)

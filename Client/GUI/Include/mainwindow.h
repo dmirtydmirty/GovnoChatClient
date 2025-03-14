@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include <QStackedWidget>
+#include <QAction>
+#include <QMenu>
 
 #include "chatwidget.h"
 #include "loadingwidget.h"
@@ -29,13 +31,14 @@ private:
     ChatWidget* m_chatWidget;
     LoadingWidget* m_loadingWidget;
     QStackedWidget* m_stackedWidget;
+    QMenu *optionsMenu;
+    QAction *settingsAction;
 
 signals:
     void newMessageFromGUI(QSharedPointer<Packet> packet);
 
 private slots:
     void onMessageFromGUI(QString msg);
-
-
+    void openSettingsDialog();
 };
 #endif // MAINWINDOW_H

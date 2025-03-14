@@ -4,8 +4,15 @@
 #include <QJsonObject>
 
 Client::Client(QObject *parent)
-    : QObject{parent}
-{}
+    : QObject{parent}, m_state{ClientState::afk}, reconnectTimer{new QTimer(this)}
+{
+    connect(&tcpClient, &TCPClient::packetReceived, this, &Client::handlePacket);
+    connect(&tcpClient, &TCPClient::disconnected, this, &Client::onSocketDisconnected);
+    connect(&gui, &MainWindow::newMessageFromGUI, this, &Client::sendPacket);
+    connect(reconnectTimer, &QTimer::timeout, this, &Client::onTimeout);
+
+    reconnectTimer->setInterval(reconnectInterval);
+}
 
 void Client::readServerConfig()
 {
@@ -17,16 +24,36 @@ void Client::readServerConfig()
         QJsonObject obj = doc.object();
         if (obj["host"].isString() && obj["port"].isDouble())
             server = QPair(obj["host"].toString(), obj["port"].toInt());
+        cfg.close();
     }
 
 }
 
-void Client::start(){
+void Client::connectToServer()
+{
     readServerConfig();
     tcpClient.connectToHost(server.first, server.second);
-    connect(&tcpClient, &TCPClient::packetReceived, this, &Client::handlePacket);
-    connect(&gui, &MainWindow::newMessageFromGUI, this, &Client::sendPacket);
+}
+
+void Client::start(){
+    connectToServer();
+    m_state = ClientState::Connecting;
+    reconnectTimer->start();
     gui.show();
+}
+
+void Client::onSocketDisconnected()
+{
+    qDebug() << "Socket disconnected";
+    connectToServer();
+    reconnectTimer->start();
+}
+
+void Client::onTimeout()
+{
+    reconnectTimer->stop();
+    qDebug() << "Timeout";
+    tcpClient.disconnect();
 }
 
 void Client::handlePacket(QString rawPacket)
@@ -42,6 +69,8 @@ void Client::handlePacket(QString rawPacket)
         gui.onMessageFromServer(packet);
         break;
     case MessageType::USER_ID_NOTIFICATION:
+        m_state = ClientState::Connected;
+        reconnectTimer->stop();
         gui.startChating(packet->get_message()->get().toInt());
         break;
     default:

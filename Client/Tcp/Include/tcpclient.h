@@ -16,10 +16,11 @@ public:
 
 signals:
     void packetReceived(QString packet);
+    void disconnected();
 
 private slots:
     void onReadyRead();
-
+    void onDisconnected();
 public slots:
     void sendPacket(QString packet);
 };

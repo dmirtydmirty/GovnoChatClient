@@ -16,7 +16,7 @@ set(SOURCES
     GUI/Source/chatwidget.cpp
     GUI/Source/loadingwidget.cpp
     GUI/Source/mainwindow.cpp
-    GUI/Source/settingswidget.cpp
+    GUI/Source/settingsdialog.cpp
     GUI/Source/chatmodel.cpp
     GUI/Source/chatdelegate.cpp
     Main/Source/client.cpp
@@ -30,7 +30,7 @@ set(INCLUDES
     GUI/Include/chatwidget.h
     GUI/Include/loadingwidget.h
     GUI/Include/mainwindow.h
-    GUI/Include/settingswidget.h
+    GUI/Include/settingsdialog.h
     GUI/Include/chatmessage.h
     GUI/Include/chatmodel.h
     GUI/Include/chatdelegate.h
