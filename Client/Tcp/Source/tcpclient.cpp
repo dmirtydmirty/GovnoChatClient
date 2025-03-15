@@ -24,10 +24,11 @@ void TCPClient::disconnect(){
 }
 
 void TCPClient::onReadyRead() {
-    while (socket->canReadLine()) {
-        QByteArray packet = socket->readAll();
-        emit packetReceived(packet);
-    }
+    QByteArray packet = socket->readAll();
+    QString packetStr = QString::fromUtf8(packet);
+    packet.erase(packet.end()-1);
+    emit packetReceived(packet);
+
 }
 
 void TCPClient::onDisconnected(){
@@ -35,5 +36,5 @@ void TCPClient::onDisconnected(){
 }
 
 void TCPClient::sendPacket(QString packet){
-    socket->write(packet.toUtf8());
+    socket->write((packet + separator).toUtf8());
 }

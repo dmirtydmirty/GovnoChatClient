@@ -8,6 +8,7 @@ class TCPClient : public QObject
 {
     Q_OBJECT
     QTcpSocket *socket;
+    const char separator = 0x1E;
 public:
     TCPClient();
 
