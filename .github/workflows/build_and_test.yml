@@ -49,3 +49,23 @@ jobs:
         run:  ctest --progress --verbose --test-dir ${{ runner.temp }}\${{ env.BUILD_DIR_NAME }}\Test
 
 
+
+      - name: Create artifact
+        run: |
+            mkdir -p ${{ runner.temp }}\art\Client
+            cp ${{ runner.temp }}\${{ env.BUILD_DIR_NAME }}\Client\Client.exe  ${{ runner.temp }}\art\Client
+            cp ${{ runner.temp }}\${{ env.BUILD_DIR_NAME }}\Client\srv.json  ${{ runner.temp }}\art\Client
+
+      - name: Deploy
+        run: ${{ runner.temp }}\Qt\${{ env.QT_VERSION }}\mingw_64\bin\windeployqt.exe ${{ runner.temp }}\art\Client\Client.exe
+
+      - name: Browse_files
+        run: dir ${{ runner.temp }}\art\Client\
+        
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+            name: artifact
+            path: ${{ runner.temp }}\art
+
+
